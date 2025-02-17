@@ -42,12 +42,18 @@
         }
 
         .nav-links button {
-            background: none;
+            /* background: none; */
+            background-color: darkorange;
             border: none;
             font-size: 1em;
             font-weight: bold;
             cursor: pointer;
             color: white;
+        }
+
+        .nav-links button:hover {
+            /* background: none; */
+            background-color: rgba(233, 128, 0, 0.803);
         }
 
         .theme-toggle {
@@ -87,11 +93,14 @@
         }
 
         button.reset-btn {
-            background-color: red;
+            color: rgb(255, 0, 0);
+            font-size: larger;
+            font-weight: bolder;
+            background-color: darkorange;
         }
 
         button.reset-btn:hover {
-            background-color: rgb(230, 26, 26);
+            background-color: rgba(233, 128, 0, 0.803);
         }
 
         button.cal-btn {
@@ -164,10 +173,15 @@
 <body>
     <div class="navbar">
         <div class="nav-links">
+            <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
             <button onclick="showSection('home')">Home</button>
-            <button onclick="showSection('grading')">Grading System</button>
+            <button onclick="showSection('grading')">Grading_System</button>
+            <div></div>
+
         </div>
-        <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+
+        <button class="reset-btn" onclick="resetCalculator()">❌Reset❌</button>
+
     </div>
 
     <div id="home" class="container active">
@@ -186,11 +200,11 @@
             <option value="1.00">D</option>
             <option value="0.00">F</option>
         </select>
-        <button onclick="addCourse()">Add Course</button>
+        <button onclick="addCourse()">🔻Add Course🔻</button>
         <ul id="courseList"></ul>
 
         <!-- <button onclick="resetCalculator()">Reset</button> -->
-        <button class="reset-btn" onclick="resetCalculator()">Reset</button>
+        <!-- <button class="reset-btn" onclick="resetCalculator()">Reset</button> -->
         <button class="cal-btn" onclick="calculateGPA()">Calculate GPA</button>
         <div class="result" id="gpaResult"></div>
 
