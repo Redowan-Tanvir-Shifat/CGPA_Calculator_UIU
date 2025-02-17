@@ -86,14 +86,31 @@
             transition: background 0.3s;
         }
 
+        button.reset-btn {
+            background-color: red;
+        }
+
+        button.reset-btn:hover {
+            background-color: rgb(230, 26, 26);
+        }
+
+        button.cal-btn {
+            background-color: rgb(17, 188, 17);
+        }
+
+        button.cal-btn:hover {
+            background-color: rgb(15, 166, 15);
+        }
+
         button:hover {
             background-color: darkorange;
         }
 
         .result {
             font-size: 1.2em;
-            font-weight: bold;
+            font-weight: bolder;
             margin-top: 15px;
+            color: rgb(17, 188, 17);
         }
 
         table {
@@ -171,8 +188,10 @@
         </select>
         <button onclick="addCourse()">Add Course</button>
         <ul id="courseList"></ul>
-        <button onclick="calculateGPA()">Calculate GPA</button>
-        <button onclick="resetCalculator()">Reset</button>
+
+        <!-- <button onclick="resetCalculator()">Reset</button> -->
+        <button class="reset-btn" onclick="resetCalculator()">Reset</button>
+        <button class="cal-btn" onclick="calculateGPA()">Calculate GPA</button>
         <div class="result" id="gpaResult"></div>
 
         <hr style="margin: 20px 0; border: 1px solid orange;">
@@ -180,7 +199,7 @@
         <h2>CGPA Calculator (UIU)</h2>
         <input type="number" id="prevCgpa" placeholder="Previous CGPA" step="0.01">
         <input type="number" id="prevCredits" placeholder="Previous Total Credits" min="1">
-        <button onclick="calculateCGPA()">Calculate CGPA</button>
+        <button class="cal-btn" onclick="calculateCGPA()">Calculate CGPA</button>
         <div class="result" id="cgpaResult"></div>
     </div>
 
