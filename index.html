@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CGPA Calculator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            text-align: center;
+            padding: 20px;
+            background-color: white;
+            color: black;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .dark-mode {
+            background-color: #031622f0;
+            color: orange;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: orange;
+            padding: 10px 20px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-links button {
+            background: none;
+            border: none;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            color: white;
+        }
+
+        .theme-toggle {
+            cursor: pointer;
+            font-size: 1.5em;
+            color: white;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: auto;
+            display: none;
+        }
+
+        .active {
+            display: block;
+        }
+
+        input,
+        select,
+        button {
+            margin: 10px 0;
+            padding: 12px;
+            width: calc(100% - 24px);
+            border: 1px solid orange;
+            border-radius: 5px;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: orange;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background-color: darkorange;
+        }
+
+        .result {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th,
+        td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background: orange;
+            color: white;
+            font-size: 1.1em;
+        }
+
+        tr:hover {
+            background: #f1f1f1;
+        }
+
+        @media (max-width: 768px) {
+            table {
+                font-size: 0.9em;
+            }
+
+            th,
+            td {
+                padding: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="nav-links">
+            <button onclick="showSection('home')">Home</button>
+            <button onclick="showSection('grading')">Grading System</button>
+        </div>
+        <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+    </div>
+
+    <div id="home" class="container active">
+        <h2>GPA Calculator (UIU)</h2>
+        <input type="number" id="credit" placeholder="Enter Credit Hours" min="1" required>
+        <select id="grade">
+            <option value="4.00">A</option>
+            <option value="3.67">A-</option>
+            <option value="3.33">B+</option>
+            <option value="3.00">B</option>
+            <option value="2.67">B-</option>
+            <option value="2.33">C+</option>
+            <option value="2.00">C</option>
+            <option value="1.67">C-</option>
+            <option value="1.33">D+</option>
+            <option value="1.00">D</option>
+            <option value="0.00">F</option>
+        </select>
+        <button onclick="addCourse()">Add Course</button>
+        <ul id="courseList"></ul>
+        <button onclick="calculateGPA()">Calculate GPA</button>
+        <button onclick="resetCalculator()">Reset</button>
+        <div class="result" id="gpaResult"></div>
+
+        <hr style="margin: 20px 0; border: 1px solid orange;">
+
+        <h2>CGPA Calculator (UIU)</h2>
+        <input type="number" id="prevCgpa" placeholder="Previous CGPA" step="0.01">
+        <input type="number" id="prevCredits" placeholder="Previous Total Credits" min="1">
+        <button onclick="calculateCGPA()">Calculate CGPA</button>
+        <div class="result" id="cgpaResult"></div>
+    </div>
+
+    <div id="grading" class="container">
+        <h2>Grading System</h2>
+        <table>
+            <tr>
+                <th>Letter Grade</th>
+                <th>Grade Point</th>
+                <th>Marks (%)</th>
+                <th>Assessment</th>
+            </tr>
+            <tr>
+                <td>A</td>
+                <td>4.00</td>
+                <td>90 - 100</td>
+                <td>Outstanding</td>
+            </tr>
+            <tr>
+                <td>A-</td>
+                <td>3.67</td>
+                <td>86 - 89</td>
+                <td>Excellent</td>
+            </tr>
+            <tr>
+                <td>B+</td>
+                <td>3.33</td>
+                <td>82 - 85</td>
+                <td>Very Good</td>
+            </tr>
+            <tr>
+                <td>B</td>
+                <td>3.00</td>
+                <td>78 - 81</td>
+                <td>Good</td>
+            </tr>
+            <tr>
+                <td>B-</td>
+                <td>2.67</td>
+                <td>74 - 77</td>
+                <td>Above Average</td>
+            </tr>
+            <tr>
+                <td>C+</td>
+                <td>2.33</td>
+                <td>70 - 73</td>
+                <td>Average</td>
+            </tr>
+            <tr>
+                <td>C</td>
+                <td>2.00</td>
+                <td>66 - 69</td>
+                <td>Below Average</td>
+            </tr>
+            <tr>
+                <td>C-</td>
+                <td>1.67</td>
+                <td>62 - 65</td>
+                <td>Poor</td>
+            </tr>
+            <tr>
+                <td>D+</td>
+                <td>1.33</td>
+                <td>58 - 61</td>
+                <td>Very Poor</td>
+            </tr>
+            <tr>
+                <td>D</td>
+                <td>1.00</td>
+                <td>55 - 57</td>
+                <td>Pass</td>
+            </tr>
+            <tr>
+                <td>F</td>
+                <td>0.00</td>
+                <td>0 - 54</td>
+                <td>Fail</td>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+        let courses = [];
+
+        function showSection(section) {
+            document.querySelectorAll('.container').forEach(div => div.classList.remove('active'));
+            document.getElementById(section).classList.add('active');
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            document.querySelector('.theme-toggle').innerText = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+        }
+
+        function addCourse() {
+            let credit = parseFloat(document.getElementById('credit').value);
+            let grade = parseFloat(document.getElementById('grade').value);
+            if (!credit || !grade) return;
+            courses.push({ credit, grade });
+            document.getElementById('courseList').innerHTML += `<li>${credit} Credits - Grade ${grade}</li>`;
+            document.getElementById('credit').value = "";
+        }
+
+        function calculateGPA() {
+            if (courses.length === 0) return;
+            let totalCredits = courses.reduce((sum, c) => sum + c.credit, 0);
+            let totalPoints = courses.reduce((sum, c) => sum + (c.credit * c.grade), 0);
+            let gpa = totalPoints / totalCredits;
+            document.getElementById('gpaResult').innerText = `Your GPA: ${roundGPA(gpa)}`;
+        }
+
+        function calculateCGPA() {
+            let prevCgpa = parseFloat(document.getElementById('prevCgpa').value);
+            let prevCredits = parseFloat(document.getElementById('prevCredits').value);
+            let newGpa = parseFloat(document.getElementById('gpaResult').innerText.split(': ')[1]);
+            let newCredits = courses.reduce((sum, c) => sum + c.credit, 0);
+            if (!prevCgpa || !prevCredits || isNaN(newGpa)) return;
+            let cgpa = ((prevCgpa * prevCredits) + (newGpa * newCredits)) / (prevCredits + newCredits);
+            document.getElementById('cgpaResult').innerText = `Your CGPA: ${roundGPA(cgpa)}`;
+        }
+
+        function resetCalculator() {
+            courses = [];
+            document.getElementById('courseList').innerHTML = "";
+            document.getElementById('gpaResult').innerText = "";
+            document.getElementById('cgpaResult').innerText = "";
+        }
+
+        function roundGPA(value) {
+            return value.toFixed(2);
+        }
+    </script>
+</body>
+
+</html>
