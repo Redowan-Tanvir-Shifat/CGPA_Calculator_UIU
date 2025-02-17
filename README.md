@@ -1,1 +1,1 @@
-# UIU_CGPA_Calculator
+# CGPA_Calculator_UIU
